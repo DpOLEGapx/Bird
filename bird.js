@@ -22,11 +22,12 @@ function birdsCreate(numberBirds) {
     
             coordinateY: Math.round((Math.random() * 100)),
             coordinateX: Math.round((Math.random() * 100)),
-            color: numberGeneration(1,10)
+            color: numberGeneration(1,10),
+            yell: BIRD_YELL[numberGeneration(0,9)]
     
         });
     
-        scene.insertAdjacentHTML('beforeEnd', '<figure class="bird bird--color-' + bird.color + '" style="top: '+ bird.coordinateY + '%; left: ' + bird.coordinateX + '%;"><figure class="bird__body"></figure><figure class="bird__head"><figure class="eye eye--left"></figure><figure class="eye eye--right"></figure></figure><figure class="bird__wing bird__wing--left"></figure><figure class="bird__wing bird__wing--right"></figure><figure class="bird__yell">' + BIRD_YELL[numberGeneration(0,9)] + '</figure></figure>'); 
+        scene.insertAdjacentHTML('beforeEnd', '<figure class="bird bird--color-' + bird.color + '" style="top: '+ bird.coordinateY + '%; left: ' + bird.coordinateX + '%;"><figure class="bird__body"></figure><figure class="bird__head"><figure class="eye eye--left"></figure><figure class="eye eye--right"></figure></figure><figure class="bird__wing bird__wing--left"></figure><figure class="bird__wing bird__wing--right"></figure><figure class="bird__yell">' + bird.yell + '</figure></figure>'); 
     }
     
     //random number generation for color/yell
