@@ -65,6 +65,7 @@
     height: 100px;
     transform: translate(-50%, -50%);
     transition: all 3s;
+    cursor: pointer;
   }
 
   .bird--color-1 {
