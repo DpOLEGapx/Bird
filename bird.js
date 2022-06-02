@@ -51,7 +51,7 @@ function birdsCreate(numberBirds) {
             item.style.top = '-100%';
             item.style.left = '-100%';
         
-            //action return
+            //animation return
             function birdReturn() {          
                 
                 let birdReturnCoordinateY = Math.round((Math.random() * 100));
