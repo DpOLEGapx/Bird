@@ -24,8 +24,8 @@ function createBird() {
 
     let bird = new Bird({
     
-        coordinateY: Math.round((Math.random() * 100)),
-        coordinateX: Math.round((Math.random() * 100)),
+        coordinateY: generationNumber(1,100),
+        coordinateX: generationNumber(1,100),
         color: generationNumber(1,10),
         yell: BIRD_YELL[generationNumber(0,9)]
     });
