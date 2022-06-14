@@ -60,12 +60,10 @@
   
   .bird {
     position: absolute;
-    top: 50%;
     width: 100px;
     height: 100px;
     transform: translate(-50%, -50%);
     transition: all 3s;
-    cursor: pointer;
   }
 
   .bird--color-1 {

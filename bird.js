@@ -1,8 +1,10 @@
 const BIRD_YELL = ['Hello!','Shalom!','Aloha!','Bom dia!','Salute!','Guten Tag!','Hola!','Bonjour!','Zdravo!','Terve!'];
 
 const scene = document.querySelector('.scene');
+const counter = document.querySelector('.counter');
+let counterVal = 0;
 
-//create bird class
+//----- CREATE BIRD CLASS -----//
 class Bird {
     
     constructor(option) {
@@ -14,24 +16,22 @@ class Bird {
     }
 }
 
-//random number generation for color/yell
-function generationNumber(min, max) {
-    return Math.round(Math.random() * (max - min)) + min;
-}
+//----- CREATE BIRD OBJECT -----//
+function createBird(birdCoordinates) {
 
-//create bird object
-function createBird() {
-
-    let bird = new Bird({
+    let birdClass = new Bird({
     
-        coordinateY: generationNumber(1,100),
-        coordinateX: generationNumber(1,100),
+        coordinateY: this.event.pageY,
+        coordinateX: this.event.pageX,
         color: generationNumber(1,10),
         yell: BIRD_YELL[generationNumber(0,9)]
     });
 
-    scene.insertAdjacentHTML('beforeEnd', 
-    `<figure class="bird bird--color-` + bird.color + `" style="top: ` + bird.coordinateY + `%; left: ` + bird.coordinateX + `%;">
+    const bird = document.createElement('figure');
+    bird.classList.add('bird', 'bird--color-' + birdClass.color + '');
+    bird.style.top = birdClass.coordinateY + 'px';
+    bird.style.left = birdClass.coordinateX + 'px';
+    bird.innerHTML = `
         <figure class="bird__body"></figure>
         <figure class="bird__head">
             <figure class="eye eye--left"></figure>
@@ -39,49 +39,67 @@ function createBird() {
         </figure>
         <figure class="bird__wing bird__wing--left"></figure>
         <figure class="bird__wing bird__wing--right"></figure>
-        <figure class="bird__yell">` + bird.yell + `</figure>
-    </figure>`); 
+        <figure class="bird__yell">` + birdClass.yell + `</figure>`
+
+    scene.insertAdjacentElement('beforeend', bird);
+
+    return bird;
 }
 
-//bird generation
-function getBirds(numberBirds) {
+//----- BIRD ADD SCENE -----//
+scene.addEventListener('click', function(birdCoordinates) {
 
-    for (let i = 0; i < numberBirds; i++) { 
+    const bird = createBird(birdCoordinates);
+
+    bird.addEventListener('click', moveBird);
+});
+
+//----- BIRD ACTIONS -----//
+function moveBird(event) {
+ 
+    event.stopPropagation();
+
+    //counter add number
+    ++counterVal;
+
+    counter.innerHTML = counterVal;
+
+    //bird flight animation start
+    const sceneCenterY = scene.clientHeight / 100 * 50;
+    const sceneCenterX = scene.clientWidth / 100 * 50;
     
-        createBird();
+    if(sceneCenterX > event.clientX) {
+
+        this.style.left = '-61px'; 
+    }
+    else {
+        this.style.left = 'calc(100% + 61px)';
     };
-    
-    //bird animation
-    const birds = document.querySelectorAll('.bird');
-    const counter = document.querySelector('.counter');
-    let counterVal = 0;
-    
-    birds.forEach(function(item) {
-    
-        item.addEventListener('click', function() {     
-        
-            //counter add number
-            ++counterVal;
-        
-            counter.innerHTML = counterVal;
-        
-            item.style.top = '-100%';
-            item.style.left = '-100%';
-        
-            //animation return
-            function birdReturn() {          
-                
-                let birdReturnCoordinateY = Math.round((Math.random() * 100));
-                let birdReturnCoordinateX = Math.round((Math.random() * 100));
-                
-                item.style.top = birdReturnCoordinateY + '%';
-                item.style.left = birdReturnCoordinateX + '%';
-            };
-    
-            setTimeout(birdReturn, 1000);
-        
-        });
-    });
-};
 
-getBirds(3);
+    if(sceneCenterY > event.clientY) {
+
+        this.style.top = '-30px';
+    }
+    else {
+        
+        this.style.top = 'calc(100% + 80px)';
+    };  
+
+    //bird flight animation return
+    returnBird(this);
+}
+
+//----- BIRD FLIGHT ANIMATION RETURN -----//
+function returnBird(item) {  
+
+    setTimeout(function() {
+
+        item.style.top = generationNumber(1,100) + '%',
+        item.style.left = generationNumber(1,100) + '%';
+    }, 5000);
+}
+
+//----- RANDOM NUMBER GENERATION FOR COLOR/YELL -----//
+function generationNumber(min, max) {
+    return Math.round(Math.random() * (max - min)) + min;
+}
