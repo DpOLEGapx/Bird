@@ -74,7 +74,7 @@ function moveBird(event) {
     }
     else {
         this.style.left = 'calc(100% + 61px)';
-    };
+    }
 
     if(sceneCenterY > event.clientY) {
 
@@ -83,7 +83,7 @@ function moveBird(event) {
     else {
         
         this.style.top = 'calc(100% + 80px)';
-    };  
+    } 
 
     //bird flight animation return
     returnBird(this);
